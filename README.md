@@ -89,6 +89,5 @@ The script will automatically attempt to resume from the latest compatible check
 *   Add more sophisticated loss functions (e.g., perceptual loss, SSIM).
 *   Improve data loading robustness and efficiency.
 *   Add evaluation metrics beyond training loss.
-*   Implement a separate inference script.
 
 ---
