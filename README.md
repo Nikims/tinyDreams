@@ -4,7 +4,8 @@
 This project implements a neural network model for predicting the next frame in a sequence, given the current frame and associated control inputs. It's built using PyTorch and leverages a Vision Transformer (ViT) architecture with a convolutional tokenizer and a CNN decoder head.
 
 ## What is it?
-
+![ezgif-70ecffbb162e3f](https://github.com/user-attachments/assets/d4980337-112e-4554-b5ea-93ed362e99f9)
+(example dream made with around 1500 image pairs)
 TinyDreams is an attempt to build a model that can learn the dynamics of a visual environment based on observed frames and the actions taken within that environment. The core idea is to encode the current visual state, combine it with information about the controls being applied, and then decode this combined representation back into a predicted future visual state (the next frame).
 
 ## Architecture Overview
