@@ -1,5 +1,5 @@
 
-# TinyDreamsI: Next Frame Prediction with Vision Transformer and CNN Decoder
+# TinyDreams: Next Frame Prediction with Vision Transformer and CNN Decoder
 
 This project implements a neural network model for predicting the next frame in a sequence, given the current frame and associated control inputs. It's built using PyTorch and leverages a Vision Transformer (ViT) architecture with a convolutional tokenizer and a CNN decoder head.
 
