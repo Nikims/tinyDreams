@@ -5,7 +5,7 @@ This project implements a neural network model for predicting the next frame in 
 
 ## What is it?
 
-TinyDreamsI is an attempt to build a model that can learn the dynamics of a visual environment based on observed frames and the actions taken within that environment. The core idea is to encode the current visual state, combine it with information about the controls being applied, and then decode this combined representation back into a predicted future visual state (the next frame).
+TinyDreams is an attempt to build a model that can learn the dynamics of a visual environment based on observed frames and the actions taken within that environment. The core idea is to encode the current visual state, combine it with information about the controls being applied, and then decode this combined representation back into a predicted future visual state (the next frame).
 
 ## Architecture Overview
 
@@ -14,9 +14,9 @@ The model follows a general encoder-decoder structure:
 1.  **Input:** Takes the current image frame (RGB) and a vector of sensor/control inputs.
 2.  **Image Tokenization:** The input image is processed to extract a sequence of visual tokens. This version uses a **Convolutional Tokenizer** based on ResNet blocks for hierarchical feature extraction before flattening into tokens.
 3.  **Action Processing:** The sensor/control input vector is processed through a small MLP to produce an "action token" in the same embedding space as the image tokens.
-4.  **Transformer Encoder:** The image tokens and the action token (and optionally registrar tokens) are fed into a Transformer encoder.
+4.  **Transformer Encoder:** The image tokens and the action token (and optionally register tokens) are fed into a Transformer encoder.
     *   The Transformer can use either a standard concatenated approach (action token prepended to image tokens) or an **Interleaved Cross-Attention** mechanism where image tokens attend to themselves and then cross-attend to the action token within each layer.
-    *   **Registrar Tokens** can be included to potentially capture global context or act as a bottleneck.
+    *   **Register Tokens** can be included to potentially capture global context or act as a bottleneck.
 5.  **CNN Decoder Head:** The processed tokens from the Transformer (specifically the image tokens) are reshaped back into a 2D grid and passed through a **Convolutional Decoder** based on ResNet blocks. This decoder upsamples the feature grid to reconstruct the predicted next frame.
 6.  **Output:** The model outputs a predicted image frame (RGB).
 
@@ -27,7 +27,7 @@ The model follows a general encoder-decoder structure:
 *   **CNN Decoder Head:** Uses a series of upsampling convolutional layers (ResNet blocks with nearest-neighbor upsampling) to reconstruct the image from the Transformer's output tokens.
 *   **Action Token Integration:** Sensor/control inputs are embedded into a single token and integrated into the Transformer sequence.
 *   **Interleaved vs. Concatenated Attention:** Supports two modes for integrating the action token within the Transformer layers.
-*   **Registrar Tokens:** Optional learnable tokens can be added to the sequence.
+*   **Register Tokens:** Optional learnable tokens can be added to the sequence.
 *   **ResNet Blocks:** Both the tokenizer and decoder use custom `ResNetBlock` implementations with Instance Normalization and GELU/ReLU activations.
 *   **Mixed Precision Training:** Uses `torch.cuda.amp.GradScaler` for potentially faster and more memory-efficient training on compatible hardware.
 *   **Gradient Checkpointing:** Optional `torch.utils.checkpoint.checkpoint` can be used to reduce memory usage during training at the cost of computation.
@@ -49,7 +49,7 @@ Most of the model's architecture and training hyperparameters are defined at the
 *   GAN parameters (if enabled)
 *   Checkpointing behavior
 
-**Note:** Changing certain architectural parameters (like patch size, embed dim, number of layers, filter sizes, ResNet block counts, or using/not using ConvTokenizer/Interleaved Attention/Registrar Tokens) will likely make existing checkpoints incompatible. The loading logic includes checks for some of these.
+**Note:** Changing certain architectural parameters (like patch size, embed dim, number of layers, filter sizes, ResNet block counts, or using/not using ConvTokenizer/Interleaved Attention/Register Tokens) will likely make existing checkpoints incompatible. The loading logic includes checks for some of these.
 
 ## Data Format
 
